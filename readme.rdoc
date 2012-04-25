@@ -1,0 +1,33 @@
+Parser do CNEFE - Cadastro Nacional de Endereços para Fins Estatísticos do Censo 2010
+
+# Requisitos
+
+unzip
+sed
+gawk
+
+# Como usar
+
+1 - BAIXAR OS ARQUIVOS
+
+No diretório do script, execute './download_ibge_files.sh' para baixar todos os arquivos para o diretório "ibge_files".
+
+Caso você já tenha os arquivos, crie o diretório 'ibge_files' e coloque todos os arquivos .zip que quer processar.
+
+2 - INTERPRETAR OS ARQUIVOS
+
+No diretório do script, execute './go_parse.sh'.
+
+Será criado um arquivo alldata.csv, com o csv com todos os dados processados.
+
+O arquivo files_parsed.list tem uma lista dos arquivos já interpretados, e assim é possível interromper o processamento e continuar posteriormente.
+
+# A base de dados
+
+A base de CNEFE do Censo 2010 está disponível no servidor FTP do IBGE no seguinte endereço:
+
+ftp://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Cadastro_Nacional_de_Enderecos_Fins_Estatisticos/
+
+# Próximos passos
+
+- Criar uma base de nomes de ruas, para diminuir o tamanho do arquivo a ser processado.
