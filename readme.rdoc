@@ -1,33 +1,23 @@
-Parser do CNEFE - Cadastro Nacional de Endereços para Fins Estatísticos do Censo 2010
+== CNEFE Parser
 
-# Requisitos
+Scripts para importar dados do CNEFE para SQLite3.
 
-unzip
-sed
-gawk
+== O que é o CNEFE?
 
-# Como usar
+O Cadastro Nacional de Endereços para Fins Estatísticos é uma lista com mais 78 milhões de endereços utilizada no Censo 2010. Saiba mais no site do IBGE:
 
-1 - BAIXAR OS ARQUIVOS
+http://www.ibge.gov.br/home/presidencia/noticias/noticia_visualiza.php?id_noticia=2028&id_pagina=1
 
-No diretório do script, execute './download_ibge_files.sh' para baixar todos os arquivos para o diretório "ibge_files".
+== Como usar
 
-Caso você já tenha os arquivos, crie o diretório 'ibge_files' e coloque todos os arquivos .zip que quer processar.
+Antes de começar a importação, é necessário baixar os arquivos do FTP. Na linha de comando, execute:
 
-2 - INTERPRETAR OS ARQUIVOS
+  ./download_ibge_files.sh
 
-No diretório do script, execute './go_parse.sh'.
+Este script vai baixar todos os arquivos disponíveis no FTP. Se você não quiser baixar todos os arquivos, que são muitos, interrompa a execução do script com Ctrl+C quando achar suficiente ou baixe os arquivos manualmente.
 
-Será criado um arquivo alldata.csv, com o csv com todos os dados processados.
+Depois de baixar os arquivos, execute o script ruby para criar e importar as informações para um banco de dados SQLite3.
 
-O arquivo files_parsed.list tem uma lista dos arquivos já interpretados, e assim é possível interromper o processamento e continuar posteriormente.
+  ruby import.db
 
-# A base de dados
-
-A base de CNEFE do Censo 2010 está disponível no servidor FTP do IBGE no seguinte endereço:
-
-ftp://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Cadastro_Nacional_de_Enderecos_Fins_Estatisticos/
-
-# Próximos passos
-
-- Criar uma base de nomes de ruas, para diminuir o tamanho do arquivo a ser processado.
+Este script vai criar o arquivo do banco de dados e inserir a informação disponível. Atualmente o script insere apenas os logradouros no banco de dados, sendo que ainda falta o desenvolvimento da parte de importação dos endereços. 
