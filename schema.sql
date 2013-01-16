@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS [enderecos] (
 [complemento6_valor] vARCHAR(10)  NULL,
 [latitude] vaRCHAR(15)  NULL,
 [longitude] VARCHAR(15)  NULL,
+[nulo] text  NULL,
 [localidade] VARCHAR(60)  NULL,
 [especie] VARCHAR(2)  NULL,
 [identificacao] VARCHAR(40)  NULL,
