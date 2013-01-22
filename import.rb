@@ -19,7 +19,7 @@ db.execute_batch(sql_schema)
 # variable that keeps previous line to avoid repeating queries
 last_line = ""
  
-Dir.glob(cnefe_files_dir + '12*.zip') do |filename|
+Dir.glob(cnefe_files_dir + '*.zip') do |filename|
   puts filename + " ... "
 
   Zip::ZipFile.foreach(filename) do |zipfile|
@@ -63,11 +63,11 @@ Dir.glob(cnefe_files_dir + '12*.zip') do |filename|
       
       # if line is diferent from previous, insert new logradouro
       if last_line != line[0..125] then
-        db.execute( "insert or ignore into logradouros (uf_id, municipio_id, distrito_id, tipo, titulo, nome) values (?,?,?,?,?,?)", uf_id.to_s, municipio_id, distrito_id, tipo, titulo, nome)
+        db.execute( "insert or ignore into logradouros (uf_id, municipio_id, distrito_id, subdistrito_id, setor_id, situacao_setor, tipo, titulo, nome) values (?,?,?,?,?,?,?,?,?)", uf_id, municipio_id, distrito_id, subdistrito_id, setor_id, situacao_setor, tipo, titulo, nome)
         logradouro_id = db.last_insert_row_id
       end
 	  
-	  db.execute( "insert or ignore into enderecos (logradouro_id, distrito_id, subdistrito_id, setor_id, situacao_setor, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", logradouro_id, distrito_id, subdistrito_id, setor_id, situacao_setor, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep)
+	  db.execute( "insert or ignore into enderecos (logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep)
 	  
 
    

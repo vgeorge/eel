@@ -1,9 +1,5 @@
 CREATE TABLE IF NOT EXISTS [enderecos] (
 [logradouro_id] INTEGER  NOT NULL,
-[distrito_id] TEXT  NULL,
-[subdistrito_id] TEXT  NULL,
-[setor_id] TEXT  NULL,
-[situacao_setor] INTEGER  NULL,
 [numero] VARCHAR(7)  NOT NULL,
 [modificador_numero] VARCHAR(7)  NULL,
 [complemento1] VARCHAR(20)  NULL,
@@ -35,7 +31,10 @@ CREATE TABLE IF NOT EXISTS [logradouros] (
 [id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
 [uf_id] TEXT NOT NULL,
 [municipio_id] TEXT NOT NULL,
-[distrito_id] TEXT NOT NULL,
+[distrito_id] TEXT  NULL,
+[subdistrito_id] TEXT  NULL,
+[setor_id] TEXT  NULL,
+[situacao_setor] INTEGER  NULL,
 [tipo] TEXT NOT NULL,
 [titulo] TEXT NOT NULL,
 [nome] TEXT NOT NULL
@@ -45,6 +44,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS [IDX_LOGRADOUROS] ON [logradouros](
 [uf_id]  ASC,
 [municipio_id]  ASC,
 [distrito_id]  ASC,
+[subdistrito_id] ASC,
+[setor_id] ASC,
+[situacao_setor] ASC,
 [tipo]  ASC,
 [titulo]  ASC,
 [nome]  ASC
