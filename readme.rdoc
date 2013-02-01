@@ -1,6 +1,6 @@
 == EEL - Endereços e Logradouros
 
-Esta é uma aplicação para melhorar a qualidade de endereços mapeados no OpenStreetMap. O objetivo é oferecer aos usuários a possibilidade de visualizar endereços brasileiros que ainda não estão mapeados ou que estão mapeados incorretamente, a partir de um comparativo com os dados do Cadastro Nacional de Endereços para Fins Estatísticos do IBGE. 
+Esta é uma aplicação para melhorar a qualidade de endereços mapeados no OpenStreetMap. O objetivo é oferecer aos usuários a possibilidade de visualizar endereços brasileiros que ainda não estão mapeados ou que estão mapeados incorretamente, a partir de um comparativo com os dados do Cadastro Nacional de Endereços para Fins Estatísticos do IBGE, o CNEFE. 
 
 O CNEFE é a base aberta mais completa do Brasil sobre endereços e logradouros, produzida pelo IBGE para a realização do Censo 2010, mas as suas informações não estão geo-referenciadas. O cruzamento de estes dados, fará com que tanto o OpenStreetMap quanto o CNEFE melhorem a partir de um esforço coletivo de mapeamento.  
 
