@@ -1,0 +1,23 @@
+== CNEFE Parser
+
+Scripts para importar dados do CNEFE para SQLite3.
+
+== O que é o CNEFE?
+
+O Cadastro Nacional de Endereços para Fins Estatísticos é uma lista com mais 78 milhões de endereços utilizada no Censo 2010. Saiba mais no site do IBGE:
+
+http://www.ibge.gov.br/home/presidencia/noticias/noticia_visualiza.php?id_noticia=2028&id_pagina=1
+
+== Como usar
+
+Antes de começar a importação, é necessário baixar os arquivos do FTP. Na linha de comando, execute:
+
+  ./download_ibge_files.sh
+
+Este script vai baixar todos os arquivos disponíveis no FTP. Se você não quiser baixar todos os arquivos, que são muitos, interrompa a execução do script com Ctrl+C quando achar suficiente ou baixe os arquivos manualmente.
+
+Depois de baixar os arquivos, execute o script ruby para criar e importar as informações para um banco de dados SQLite3.
+
+  ruby import.db
+
+Este script vai criar o arquivo do banco de dados e inserir a informação disponível. Atualmente o script insere apenas os logradouros no banco de dados, sendo que ainda falta o desenvolvimento da parte de importação dos endereços. 

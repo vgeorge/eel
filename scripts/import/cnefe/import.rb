@@ -1,8 +1,8 @@
 require 'zip/zip'
 require 'sqlite3'
 
-db_filename = "cnefe.sqlite"
-cnefe_files_dir = "C:/code/cnefe/"
+db_filename = "../../data/cnefe.sqlite"
+cnefe_files_dir = "../../data/cnefe/"
 
 # delete old db, if exists
 if File.exist?(db_filename) then

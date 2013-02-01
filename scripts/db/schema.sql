@@ -51,3 +51,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS [IDX_LOGRADOUROS] ON [logradouros](
 [titulo]  ASC,
 [nome]  ASC
 );
+
+CREATE TABLE [nodes] (
+  id INTEGER NOT NULL,
+  geom TEXT NOT NULL
+);
+
+CREATE TABLE [nodes_tags] (
+[id] INTEGER  NOT NULL ,
+[k] TEXT NOT NULL DEFAULT '',
+[v] TEXT NOT NULL DEFAULT ''
+);

@@ -1,23 +1,17 @@
-== CNEFE Parser
+== EEL - Endereços e Logradouros
 
-Scripts para importar dados do CNEFE para SQLite3.
+Esta é uma aplicação para melhorar a qualidade de endereços mapeados no OpenStreetMap. O objetivo é oferecer aos usuários a possibilidade de visualizar endereços brasileiros que ainda não estão mapeados ou que estão mapeados incorretamente, a partir de um comparativo com os dados do Cadastro Nacional de Endereços para Fins Estatísticos do IBGE. 
 
-== O que é o CNEFE?
+O CNEFE é a base aberta mais completa do Brasil sobre endereços e logradouros, produzida pelo IBGE para a realização do Censo 2010, mas as suas informações não estão geo-referenciadas. O cruzamento de estes dados, fará com que tanto o OpenStreetMap quanto o CNEFE melhorem a partir de um esforço coletivo de mapeamento.  
 
-O Cadastro Nacional de Endereços para Fins Estatísticos é uma lista com mais 78 milhões de endereços utilizada no Censo 2010. Saiba mais no site do IBGE:
+Atualmente o projeto está em fase de desenvolvimento e não há versão online.
+
+== Mais informações
+
+- CNEFE:
 
 http://www.ibge.gov.br/home/presidencia/noticias/noticia_visualiza.php?id_noticia=2028&id_pagina=1
 
-== Como usar
+- Como mapear endereços no OpenStreetMap:
 
-Antes de começar a importação, é necessário baixar os arquivos do FTP. Na linha de comando, execute:
-
-  ./download_ibge_files.sh
-
-Este script vai baixar todos os arquivos disponíveis no FTP. Se você não quiser baixar todos os arquivos, que são muitos, interrompa a execução do script com Ctrl+C quando achar suficiente ou baixe os arquivos manualmente.
-
-Depois de baixar os arquivos, execute o script ruby para criar e importar as informações para um banco de dados SQLite3.
-
-  ruby import.db
-
-Este script vai criar o arquivo do banco de dados e inserir a informação disponível. Atualmente o script insere apenas os logradouros no banco de dados, sendo que ainda falta o desenvolvimento da parte de importação dos endereços. 
+http://wiki.openstreetmap.org/wiki/Address

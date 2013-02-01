@@ -1,3 +1,4 @@
 .DS_Store
-cnefe_files/*
 *.sqlite*
+data/osm/*
+data/cnefe/*
