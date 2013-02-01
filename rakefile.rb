@@ -5,7 +5,7 @@ require 'csv'
 
 # TODO move this to a config file
 db_filename = "data/db.sqlite"
-schema_file = "scripts/schema.sql"
+schema_file = "scripts/db/schema.sql"
 cnefe_files_dir = "data/cnefe/"
 osmjs_path = "../osmium/osmjs/osmjs"
 osmjs_script = "scripts/osm2db.js"
