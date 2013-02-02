@@ -9,7 +9,7 @@ db_filename = "data/db.sqlite"
 schema_file = "scripts/db/schema.sql"
 cnefe_files_dir = "data/cnefe/"
 osmjs_path = "../osmium/osmjs/osmjs"
-osmjs_script = "scripts/import/osm/osm2db.js"
+osmjs_script = "scripts/osm/osm2db.js"
 osm_file = "data/osm/brazil.osm.pbf"
 osm_nodes_csv = "data/osm/nodes.csv"
 osm_nodes_tags_csv = "data/osm/nodes_tags.csv"
@@ -38,7 +38,7 @@ namespace :cnefe do
   
   desc "Download all CNEFE files"
   task :baixar do
-    puts "Execute './scripts/import/cnefe/download_cnefe_files.sh' para baixar todos arquivos do CNEFE."
+    puts "Execute './scripts/cnefe/download_cnefe_files.sh' para baixar todos arquivos do CNEFE."
   end
   
   desc "Importar arquivos do CNEFE baixados para o banco de dados."
