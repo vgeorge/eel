@@ -1,4 +1,6 @@
-CREATE TABLE IF NOT EXISTS [enderecos] (
+-- CNEFE
+
+CREATE TABLE IF NOT EXISTS [cnefe_enderecos] (
 [logradouro_id] INTEGER  NOT NULL,
 [numero] VARCHAR(7)  NOT NULL,
 [modificador_numero] VARCHAR(7)  NULL,
@@ -27,7 +29,7 @@ CREATE TABLE IF NOT EXISTS [enderecos] (
 [cep] VARCHAR(8)  NULL
 );
 
-CREATE TABLE IF NOT EXISTS [logradouros] (
+CREATE TABLE IF NOT EXISTS [cnefe_logradouros] (
 [id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
 [uf_id] TEXT NOT NULL,
 [municipio_id] TEXT NOT NULL,
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS [logradouros] (
 [nome] TEXT NOT NULL
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS [IDX_LOGRADOUROS] ON [logradouros](
+CREATE UNIQUE INDEX IF NOT EXISTS [IDX_LOGRADOUROS] ON [cnefe_logradouros](
 [uf_id]  ASC,
 [municipio_id]  ASC,
 [distrito_id]  ASC,
@@ -52,13 +54,44 @@ CREATE UNIQUE INDEX IF NOT EXISTS [IDX_LOGRADOUROS] ON [logradouros](
 [nome]  ASC
 );
 
-CREATE TABLE [nodes] (
+-- OpenStreetMap
+
+CREATE TABLE [osm_nodes] (
   id INTEGER NOT NULL,
   geom TEXT NOT NULL
 );
 
-CREATE TABLE [nodes_tags] (
+CREATE TABLE [osm_nodes_tags] (
 [id] INTEGER  NOT NULL ,
 [k] TEXT NOT NULL DEFAULT '',
 [v] TEXT NOT NULL DEFAULT ''
+);
+
+-- Malhas
+
+create table if not exists [setores] (
+[id] TEXT NOT NULL,
+[tipo] text not null
+);
+
+SELECT AddGeometryColumn('setores', 'geom', 4326, 'MULTIPOLYGON', 'XYM');
+
+create table if not exists [bairros] (
+[id] integer primary key,
+[nome] text
+);
+
+create table if not exists [subdistritos] (
+[id] integer primary key,
+[nome] text
+);
+
+create table if not exists [distritos] (
+[id] integer primary key,
+[nome] text
+);
+
+create table if not exists [municipios] (
+[id] integer primary key,
+[nome] text
 );

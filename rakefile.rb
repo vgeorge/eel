@@ -13,6 +13,7 @@ osmjs_script = "scripts/osm/osm2db.js"
 osm_file = "data/osm/brazil.osm.pbf"
 osm_nodes_csv = "data/osm/nodes.csv"
 osm_nodes_tags_csv = "data/osm/nodes_tags.csv"
+malhas_ftp_dir_url = "ftp://geoftp.ibge.gov.br/malhas_digitais/censo_2010/setores_censitarios/"
 
 desc "Initialize database (destroy current db)"
 task :initdb do |t|
@@ -23,15 +24,15 @@ task :initdb do |t|
     File.delete(db_filename)
   end
 
-  # open database
-  puts "Creating " + db_filename
-  db = SQLite3::Database.new( db_filename )
+  # Run schema.sql
+  `spatialite #{db_filename} < scripts/db/schema.sql `
+  puts "Database schema created."
 
-  # create table if they don't exist
-  puts "Running schema..."
-  sql_schema = File.open(schema_file, "rb") {|io| io.read}
-  db.execute_batch(sql_schema)
-  puts "Done."
+
+  # Import ESPG to allow reprojections.
+  `spatialite #{db_filename} < scripts/spatialite/epsg-sqlite.sql `
+  puts "ESPG table imported for reprojections."
+
 end
 
 namespace :cnefe do
@@ -162,5 +163,30 @@ namespace :osm do
 
 end
 
+namespace :limits do
+  desc "Get administrative and censitary limits from IBGE's FTP"
+  task :get do
+    puts "IBGE's FTP is blocking wget usage, please download files manually."
+    # puts "wget -P data/malhas --no-directories --continue --recursive -A.zip #{malhas_ftp_dir_url}"
+  end
 
+  desc "Expand downloaded files"
+  task :get do
+    # Expand zipfiles
+    `cd data/malhas && for z in *.zip; do unzip -oj $z *SEE250GC_SIR.* -d shp; done`
+  end
+  
+  desc "Import limits to database"
+  task :import do
+    # check if db exists
+    if not File.exist?(db_filename) then
+      puts "Database not found. Run 'rake db_init'"
+      exit
+    end
+        
+    `spatialite #{db_filename} < scripts/malhas/import.sql `
+    
+  end
+  
+end
 
