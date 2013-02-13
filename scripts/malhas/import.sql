@@ -435,3 +435,7 @@ insert or replace into distritos select distinct CD_GEOCODD, NM_DISTRIT from sec
 insert or replace into municipios select distinct cast(CD_GEOCODM as Integer), NM_MUNICIP from sectors_tmp;
 
 insert or replace into setores select CD_GEOCODI, TIPO, ST_MULTI(Transform(Geometry, 4326)) from sectors_tmp;
+  
+-- drop temporary table
+
+drop table if exists sectors_tmp;
