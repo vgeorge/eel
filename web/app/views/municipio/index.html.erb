@@ -1,0 +1,9 @@
+<h1>Municípios</h1>
+
+<% @municipios.each do |municipio| %>
+  <p>
+    <%= municipio.nome %>
+    <%= link_to 'Ver', municipio %>
+  </p>
+  
+<% end %>
