@@ -5,7 +5,7 @@ require 'sqlite3'
 require 'csv'
 
 # TODO move this to a config file
-db_filename = "data/db.sqlite"
+db_filename = "web/eel.db"
 schema_file = "scripts/db/schema.sql"
 cnefe_files_dir = "data/cnefe/"
 osmjs_path = "../osmium/osmjs/osmjs"
@@ -29,9 +29,6 @@ task :initdb do |t|
   puts "Database schema created."
 
 
-  # Import ESPG to allow reprojections.
-  `spatialite #{db_filename} < scripts/spatialite/epsg-sqlite.sql `
-  puts "ESPG table imported for reprojections."
 
 end
 
@@ -164,29 +161,37 @@ namespace :osm do
 end
 
 namespace :limits do
+  desc "Create tables for administrative boundaries"
+  task :initdb do
+    
+    puts "Creating #{db_filename}"
+    
+    puts "Importing EPSG table to allow reprojections..."
+    `spatialite #{db_filename} < scripts/spatialite/epsg-sqlite.sql `
+
+    puts "Creating limits tables..."
+    `spatialite #{db_filename} < scripts/limits/schema.sql `
+  end
+  
+  desc "Expand IBGE files and import to the database"
+  task :import do
+    
+    puts "Expanding IBGE files..."
+    `cd data/limits && for z in *.zip; do unzip -oj $z *SEE250GC_SIR.* -d shp; done`
+    
+    puts "Importing shapefiles..."
+    `spatialite #{db_filename} < scripts/limits/import_shp.sql `
+    
+  end
+    
+  
   desc "Get administrative and censitary limits from IBGE's FTP"
-  task :get do
+  task :download do
     puts "IBGE's FTP is blocking wget usage, please download files manually."
     # puts "wget -P data/malhas --no-directories --continue --recursive -A.zip #{malhas_ftp_dir_url}"
   end
 
-  desc "Expand downloaded files"
-  task :get do
-    # Expand zipfiles
-    `cd data/malhas && for z in *.zip; do unzip -oj $z *SEE250GC_SIR.* -d shp; done`
-  end
-  
-  desc "Import limits to database"
-  task :import do
-    # check if db exists
-    if not File.exist?(db_filename) then
-      puts "Database not found. Run 'rake db_init'"
-      exit
-    end
-        
-    `spatialite #{db_filename} < scripts/malhas/import.sql `
-    
-  end
+
   
 end
 
