@@ -34,16 +34,26 @@ end
 
 namespace :cnefe do
   
+  desc "Init database for CNEFE import"
+  task :initdb do
+    
+    puts "Using #{db_filename}"
+    
+    puts "Creating address and streetnames tables..."
+    `spatialite #{db_filename} < scripts/addresses/schema.sql `
+    
+  end
+  
   desc "Download all CNEFE files"
   task :baixar do
     puts "Execute './scripts/cnefe/download_cnefe_files.sh' para baixar todos arquivos do CNEFE."
   end
   
   desc "Importar arquivos do CNEFE baixados para o banco de dados."
-  task :importar do
+  task :import do
     # check if db exists
      if not File.exist?(db_filename) then
-       puts "Database not found. Run 'rake db_init'"
+       puts "Database not found. Run 'rake cnefe:initdb'"
        exit
      end
 
@@ -103,11 +113,11 @@ namespace :cnefe do
 
            # if line is diferent from previous, insert new logradouro
            if last_line != line[0..125] then
-             db.execute( "insert or ignore into cnefe_logradouros (uf_id, municipio_id, distrito_id, subdistrito_id, setor_id, situacao_setor, tipo, titulo, nome) values (?,?,?,?,?,?,?,?,?)", uf_id, municipio_id, distrito_id, subdistrito_id, setor_id, situacao_setor, tipo, titulo, nome)
+             db.execute( "insert or ignore into streetnames values (null, ?,?,?,?,?,?,?,?,?)", uf_id, municipio_id, distrito_id, subdistrito_id, setor_id, situacao_setor, tipo, titulo, nome)
              logradouro_id = db.last_insert_row_id
            end
 
-     	  db.execute( "insert or ignore into cnefe_enderecos (logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep)
+     	  db.execute( "insert or ignore into addresses values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep)
 
 
 
@@ -164,7 +174,7 @@ namespace :limits do
   desc "Create tables for administrative boundaries"
   task :initdb do
     
-    puts "Creating #{db_filename}"
+    puts "Using #{db_filename}"
     
     puts "Importing EPSG table to allow reprojections..."
     `spatialite #{db_filename} < scripts/spatialite/epsg-sqlite.sql `
