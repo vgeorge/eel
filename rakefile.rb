@@ -177,17 +177,22 @@ namespace :limits do
     puts "Using #{db_filename}"
     
     puts "Importing EPSG table to allow reprojections..."
-    `spatialite #{db_filename} < scripts/spatialite/epsg-sqlite.sql `
+    system "spatialite #{db_filename} < scripts/spatialite/epsg-sqlite.sql"
 
     puts "Creating limits tables..."
-    `spatialite #{db_filename} < scripts/limits/schema.sql `
+    system "spatialite #{db_filename} < scripts/limits/schema.sql"
   end
   
-  desc "Expand IBGE files and import to the database"
-  task :import do
+  desc "Expand IBGE files to data/limits/shp"
+  task :expand do
     
     puts "Expanding IBGE files..."
     `cd data/limits && for z in *.zip; do unzip -oj $z *SEE250GC_SIR.* -d shp; done`
+
+  end
+  
+  desc "Import IBGE shapefiles from data/limits/shp to db"
+  task :import do
     
     puts "Importing shapefiles..."
     `spatialite #{db_filename} < scripts/limits/import_shp.sql `
