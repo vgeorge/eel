@@ -1,3 +1,0 @@
-== EEL - Aplicação Web
-
-Este diretório contém a aplicação web do EEL.
