@@ -1,0 +1,24 @@
+<!-- breadcrumbs -->
+<ul class="breadcrumb">
+  <li><a href="/">Início</a> <span class="divider">/</span></li>
+  <li><a href=<%= state_url(@district.city.state.id) %>><%= @district.city.state.abbreviation %></a> <span class="divider">/</span></li>
+  <li><a href=<%= city_url(@district.city.id) %>><%= @district.city.name %></a> <span class="divider">/</span></li>
+  <li class="active"><%= @district.name %></li>
+</ul>
+
+<% if @district.has_subdistricts? then %>
+
+  Este distrito contém os seguintes sub-distritos:
+  <ul>
+  <% @district.subdistricts.each do |subdistrict| %>
+    <li>
+      <a href=<%= subdistrict_url(subdistrict.id) %>>
+        <%= subdistrict.name %>
+      </a>
+    </li>
+  <% end %>
+  </ul>
+  
+<% else %>
+  Esta distrito não tem sub-distritos.
+<% end %>

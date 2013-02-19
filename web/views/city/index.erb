@@ -1,0 +1,16 @@
+<!-- breadcrumbs -->
+<ul class="breadcrumb">
+  <li><a href="/">Início</a> <span class="divider">/</span></li>
+  <li class="active">Todas Cidades</li>
+</ul>
+
+
+<ul>
+<% @cities.each do |city| %>
+  <li>
+    <a href=<%= city_url(city.id) %>>
+      <%= city.name %>
+    </a>
+  </li>
+<% end %>
+</ul>

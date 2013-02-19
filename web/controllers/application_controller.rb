@@ -3,6 +3,8 @@
 class ApplicationController < Sinatra::Base 
   
   helpers ApplicationHelper
+  helpers LinkHelper
+
   
   # set folder for templates to ../views, but make the path absolute 
   set :views, File.expand_path('../../views', __FILE__)
@@ -13,7 +15,8 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/' do
-    "EEL"
+    @states = State.all(:order => :name.asc)
+    erb :index 
   end
   
   # 500 internal error

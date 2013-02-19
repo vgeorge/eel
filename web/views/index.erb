@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8"> 
-    <title>EEL - Endereços e Logradouros do Brasil</title>
-  </head>
-  <body> 
-    <h1>Bem vindo!</h1>
-  </body>
-</html>
+<h1>Endereços e Logradouros do Brasil</h1>
+
+<ul>
+<% @states.each do |state| %>
+  <li>
+    <a href=<%= state_url(state.id) %>>
+      <%= state.name %>
+    </a>
+  </li>
+<% end %>
+</ul>

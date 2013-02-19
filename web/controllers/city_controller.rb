@@ -1,7 +1,14 @@
 class CityController < ApplicationController 
-  get '/:id' do
+
+  get "/" do
+    title "Cidades do Brasil"
+    @cities = City.all
+    erb :"city/index" 
+  end
+
+  get '/:id' do |id|
     title "Cidade"
-    @cidade = City.first
-    erb :city 
+    @city = City.get(id)
+    erb :"city/show" 
   end
 end

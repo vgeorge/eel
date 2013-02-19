@@ -1,0 +1,9 @@
+<!-- breadcrumbs -->
+<ul class="breadcrumb">
+  <li><a href="/">Início</a> <span class="divider">/</span></li>
+  <li><a href=<%= state_url(@subdistrict.district.city.state.id) %>><%= @subdistrict.city.state.abbreviation %></a> <span class="divider">/</span></li>
+  <li><a href=<%= city_url(@subdistrict.district.city.id) %>><%= @subdistrict.district.city.name %></a> <span class="divider">/</span></li>
+  <li><a href=<%= city_url(@subdistrict.district.id) %>><%= @subdistrict.district.name %></a> <span class="divider">/</span></li>
+  <li class="active"><%= @subdistrict.name %></li>
+</ul>
+
