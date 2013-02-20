@@ -9,6 +9,8 @@ class City
   has n, :streets
   has n, :bairros
   has n, :districts
+  
+  property :streets_count, Integer, :default => 0
 
   
   def has_districts?
@@ -35,6 +37,10 @@ class City
     else
       true
     end
+  end
+  
+  def street_count
+    streets.count
   end
 
   
