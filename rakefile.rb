@@ -39,8 +39,8 @@ namespace :cnefe do
     
     puts "Using #{db_filename}"
     
-    puts "Creating address and streetnames tables..."
-    `spatialite #{db_filename} < scripts/addresses/schema.sql `
+    puts "Creating addresses and streets tables..."
+    system "sqlite3 #{db_filename} < scripts/addresses/schema.sql"
     
   end
   
@@ -76,11 +76,11 @@ namespace :cnefe do
          zipfile.get_input_stream.each do |line|
 
            # load fields into variables
-           uf_id               = line[0..1].gsub(' ','0')
-           municipio_id        = line[2..6].gsub(' ','0')
-           distrito_id         = line[7..8].gsub(' ','0')
-           subdistrito_id      = line[9..10].gsub(' ','0')
-           setor_id            = line[11..14].gsub(' ','0')
+           # uf_id               = line[0..1].gsub(' ','0')
+           municipio_id        = line[0..6].gsub(' ','0')
+           # distrito_id         = line[7..8].gsub(' ','0')
+           # subdistrito_id      = line[9..10].gsub(' ','0')
+           setor_id            = line[0..14].gsub(' ','0')
            situacao_setor      = line[15..15]
            tipo                = line[16..35].strip
            titulo              = line[36..65].strip
@@ -113,11 +113,11 @@ namespace :cnefe do
 
            # if line is diferent from previous, insert new logradouro
            if last_line != line[0..125] then
-             db.execute( "insert or ignore into streetnames values (null, ?,?,?,?,?,?,?,?,?)", uf_id, municipio_id, distrito_id, subdistrito_id, setor_id, situacao_setor, tipo, titulo, nome)
+             db.execute( "insert or ignore into streets values (null,?,?,?,?)", municipio_id.to_i, tipo, titulo, nome)
              logradouro_id = db.last_insert_row_id
            end
 
-     	  db.execute( "insert or ignore into addresses values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep)
+        db.execute( "insert or ignore into addresses values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", setor_id, logradouro_id, numero, modificador_numero, complemento1, complemento1_valor, complemento2, complemento2_valor, complemento3, complemento3_valor, complemento4, complemento4_valor, complemento5, complemento5_valor, complemento6, complemento6_valor, latitude, longitude, localidade, nulo, especie, identificacao, multiplicidade, domicilio_coletivo, quadra, face, cep)
 
 
 

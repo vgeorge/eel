@@ -39,3 +39,18 @@
   Esta cidade não tem bairros cadastrados no IBGE.
 <% end %>
 
+<% if @city.streets.count then %>
+
+  <p>Ruas:</p>
+  <ul>
+  <% @city.streets.each do |street| %>
+    <li>
+        <%= street.fullname %>
+    </li>
+  <% end %>
+  </ul>
+  
+<% else %>
+  Não foram encontradas ruas para esta cidade.
+<% end %>
+

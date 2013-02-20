@@ -3,3 +3,4 @@
 data/osm/*
 data/cnefe/*
 *.db
+*.log

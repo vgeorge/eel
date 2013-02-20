@@ -6,8 +6,10 @@ class City
   
   belongs_to :state
   
+  has n, :streets
   has n, :bairros
   has n, :districts
+
   
   def has_districts?
     case districts.count

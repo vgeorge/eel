@@ -2,8 +2,29 @@
 -- CNEFE
 -- 
 
-CREATE TABLE IF NOT EXISTS addresses (
-  streetname_id INTEGER  NOT NULL,
+DROP TABLE IF EXISTS streets;
+
+CREATE TABLE streets (
+  id        INTEGER PRIMARY KEY AUTOINCREMENT,
+  city_id   INTEGER NOT NULL,
+  type      TEXT NOT NULL,
+  title     TEXT,
+  name      TEXT NOT NULL,
+  FOREIGN KEY(city_id) REFERENCES cities(id)
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS IDX_LOGRADOUROS ON streets(
+  city_id  ASC,
+  type  ASC,
+  title  ASC,
+  name  ASC
+);
+
+DROP TABLE IF EXISTS addresses;
+
+CREATE TABLE addresses (
+  sector_id INTEGER NOT NULL,
+  street_id INTEGER NOT NULL,
   address_number VARCHAR(7) NOT NULL,
   number_modifier VARCHAR(7)  NULL,
   complement1 VARCHAR(20)  NULL,
@@ -28,31 +49,12 @@ CREATE TABLE IF NOT EXISTS addresses (
   colective_domicile VARCHAR(30)  NULL,
   block VARCHAR(3)  NULL,
   face VARCHAR(3)  NULL,
-  cep VARCHAR(8)  NULL
+  cep VARCHAR(8)  NULL,
+  
+  FOREIGN KEY(sector_id) REFERENCES sectors(id),
+  FOREIGN KEY(street_id) REFERENCES streets(id)
+  
 );
 
-CREATE TABLE IF NOT EXISTS streetnames (
-  id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
-  state_id TEXT NOT NULL,
-  city_id TEXT NOT NULL,
-  district_id TEXT  NULL,
-  subdistrict_id TEXT  NULL,
-  sector_id TEXT  NULL,
-  sector_situation INTEGER  NULL,
-  type TEXT NOT NULL,
-  title TEXT NOT NULL,
-  name TEXT NOT NULL
-);
 
-CREATE UNIQUE INDEX IF NOT EXISTS IDX_LOGRADOUROS ON streetnames(
-  state_id  ASC,
-  city_id  ASC,
-  district_id  ASC,
-  subdistrict_id ASC,
-  sector_id ASC,
-  sector_situation ASC,
-  type  ASC,
-  title  ASC,
-  name  ASC
-);
 
