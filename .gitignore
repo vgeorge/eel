@@ -1,6 +1,5 @@
 .DS_Store
 *.sqlite*
-data/osm/*
-data/cnefe/*
+data
 *.db
 *.log

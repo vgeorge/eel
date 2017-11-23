@@ -1,0 +1,12 @@
+version: '2'
+services:
+  postgres:
+    image: mdillon/postgis:9.6
+    ports:
+      - 15432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=eel
+      - POSTGRES_USER=eel
+      - POSTGRES_PASSWORD=eel
